@@ -1,0 +1,84 @@
+{
+  "info": {
+    "name": "Project2-Ecom",
+    "_postman_id": "project2-ecom-collection",
+    "description": "Login and auth test requests for Project2-Ecom",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/api/user/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "user",
+            "login"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "try {",
+              "  const res = pm.response.json();",
+              "  if (res.token) {",
+              "    pm.environment.set('token', res.token);",
+              "    console.log('token saved to environment');",
+              "  } else {",
+              "    console.log('No token in response');",
+              "  }",
+              "} catch (e) {",
+              "  console.log('Response is not JSON or no token');",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/user/is-auth",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:4000/api/user/is-auth",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "user",
+            "is-auth"
+          ]
+        }
+      }
+    }
+  ]
+}
